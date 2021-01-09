@@ -1,0 +1,23 @@
+There has to be a better way.  Below are specific changes to move the canvas in front of the camera.
+These probably won't match the oculus FOV however and would need to be adjusted.
+
+canvas
+	render mode - from "Screen Space - Overlay" to "World Space"
+	reparent under "OVRCameraRig"
+
+	Rect: 0.048, -0.265, 0.59
+	Width: 3
+	Height: 3
+	Pivot: 0.5, 0,5
+	Scale: 0.6, 0.6, 1
+
+
+Text
+	Rect: -0.53, 0.43, 0
+	Width: 360
+	Height: 400
+
+	Anchors: All (0.5)
+	Scale: 0.005, 0.005, 1
+	Fotn Size: 40
+
