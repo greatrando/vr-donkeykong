@@ -1,6 +1,6 @@
 # VR Donkey Kong
 
-![Alt text](/ExampleScreenshot.png?raw=true "VR Donkey Kong")
+![Alt text](ExampleScreenshot.png?raw=true "VR Donkey Kong")
 
 First attempt at building a VR game.  Written for Oculus.  Excuse code quality, it is a mess.
 
