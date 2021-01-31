@@ -31,8 +31,8 @@ public class VRHands : MonoBehaviour
     public GameObject RightHand;
 
 
-    public GameObject LeftHandGrabbing { get; private set; } = null;
-    public GameObject RightHandGrabbing { get; private set; } = null;
+    public List<GameObject> LeftHandGrabbing { get; private set; } = null;
+    public List<GameObject> RightHandGrabbing { get; private set; } = null;
     public Vector3 LeftMoveDelta { get; private set; } = Vector3.zero;
     public Vector3 RightMoveDelta { get; private set; } = Vector3.zero;
 
@@ -53,15 +53,21 @@ public class VRHands : MonoBehaviour
 
     private void OnGrabbedLeft(HandController sender, List<GameObject> grabbedObjects)
     {
-        LeftHandGrabbing = grabbedObjects[0];
-        OnLeftHandGrabbed?.Invoke(LeftHandGrabbing);
+        LeftHandGrabbing = grabbedObjects;
+        foreach (GameObject grabbed in LeftHandGrabbing)
+        {
+            OnLeftHandGrabbed?.Invoke(grabbed);
+        }
     }
 
 
     private void OnGrabbedRight(HandController sender, List<GameObject> grabbedObjects)
     {
-        RightHandGrabbing = grabbedObjects[0];
-        OnRightHandGrabbed?.Invoke(RightHandGrabbing);
+        RightHandGrabbing = grabbedObjects;
+        foreach (GameObject grabbed in RightHandGrabbing)
+        {
+            OnRightHandGrabbed?.Invoke(grabbed);
+        }
     }
 
 
@@ -69,10 +75,12 @@ public class VRHands : MonoBehaviour
     {
         LeftMoveDelta = Vector3.zero;
 
-        foreach (GameObject gameObject in grabbedObjects)
+        foreach (GameObject released in grabbedObjects)
         {
-            OnLeftHandReleased?.Invoke(gameObject);
+            OnLeftHandReleased?.Invoke(released);
         }
+
+        LeftHandGrabbing = null;
     }
 
 
@@ -80,10 +88,12 @@ public class VRHands : MonoBehaviour
     {
         RightMoveDelta = Vector3.zero;
 
-        foreach (GameObject gameObject in grabbedObjects)
+        foreach (GameObject released in grabbedObjects)
         {
-            OnRightHandReleased?.Invoke(gameObject);
+            OnRightHandReleased?.Invoke(released);
         }
+
+        RightHandGrabbing = null;
     }
 
 

@@ -44,6 +44,13 @@ public class HandController : MonoBehaviour
     }
 
 
+    public void Reset()
+    {
+        isHandClosed = false;
+        currentCollisions.Clear();
+    }
+
+
     private void FixedUpdate()
     {
         _grabPosition = this.transform.localPosition;
@@ -98,21 +105,28 @@ public class HandController : MonoBehaviour
             isTrigger = OVRInput.Get(OVRInput.RawButton.RHandTrigger);
         }
 
-        if (!isHandClosed && isTrigger)
+        if (isTrigger)
         {
-            isHandClosed = true;
-            _grabPosition = this.transform.localPosition;
-
-            if (currentCollisions.Count > 0)
+            if (!isHandClosed)
             {
-                OnGrabbed?.Invoke(this, currentCollisions);
+                _grabPosition = this.transform.localPosition;
+
+                if (currentCollisions.Count > 0)
+                {
+                    OnGrabbed?.Invoke(this, currentCollisions);
+                }
             }
 
+            isHandClosed = true;
         }
-        else if (isHandClosed && !isTrigger)
+        else
         {
-            OnReleased(this, currentCollisions);
-            currentCollisions.Clear();
+            if (isHandClosed)
+            {
+                OnReleased(this, currentCollisions);
+                currentCollisions.Clear();
+            }
+
             isHandClosed = false;
         }
     }

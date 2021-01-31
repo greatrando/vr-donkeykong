@@ -159,7 +159,6 @@ public class Fireball : MonoBehaviour
 
     public void OnTriggerEnter(Collider col)
     {
-        Debug.Log("Trigger2: " + col.gameObject.name);
         if (
                 (col.gameObject.transform.parent != null && col.gameObject.transform.parent.name == "Barrels")
             )

@@ -11,9 +11,8 @@ The focus of this project was to learn:
  
 
 #### Todo:
+  - Top of ladders needs work.  Currently you have to make sure you've climbed high enough for the player to clear the next floor before moving forward.
 
-  - Figure out how to switch the HUD to Oculus viewport
-  - Swap the controllers visual out with the hands.
 
 #### Probably won't do:
 

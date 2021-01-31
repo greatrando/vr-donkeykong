@@ -4,7 +4,10 @@ using UnityEngine;
 public class DonkeyKongGame : MonoBehaviour
 {
 
+    private const bool DEBUG = false;
 
+
+    private bool _isLoaded = false;
     private Toast _toast;
     private GameBarrels _barrels;
     private FireBalls _fireBalls;
@@ -18,12 +21,22 @@ public class DonkeyKongGame : MonoBehaviour
         _toast = this.gameObject.GetComponent<Toast>();
         _barrels = this.gameObject.GetComponent<GameBarrels>();
         _fireBalls = this.gameObject.GetComponent<FireBalls>();
+
     }
 
 
     void Update()
     {
-        // TestToast();
+        if (DEBUG)
+        {
+            TestToast();
+        }
+        if (!_isLoaded && !UnityEngine.XR.XRSettings.isDeviceActive) 
+        {
+            _isLoaded = true;
+            GameObject.Destroy(GameObject.Find("CustomHandLeft"));
+            GameBarrel.Destroy(GameObject.Find("CustomHandRight").GetComponent<MeshRenderer>());
+        }
     }
 
 
@@ -54,6 +67,10 @@ public class DonkeyKongGame : MonoBehaviour
     {
         _barrels.Reset();
         _fireBalls.Reset();
+
+
+        GameObject.Find("LeftHandAnchor").GetComponent<HandController>().Reset();
+        GameObject.Find("RightHandAnchor").GetComponent<HandController>().Reset();
     }
 
 

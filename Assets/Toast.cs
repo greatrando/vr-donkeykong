@@ -7,9 +7,11 @@ public class Toast : MonoBehaviour
 {
 
 
-    private const int FONT_SIZE = 140; //14;
-    private const int LINE_HEIGHT = 160; //30
-    private const int BOTTOM_MARGIN = 70;
+    private const int FONT_SIZE = 40; //14;
+    private const int LINE_HEIGHT = 60; //30
+    private const int BOTTOM_MARGIN = 200;
+    private const int BOTTOM_MARGIN_OCULUS = 600;
+
 
     public Canvas Canvas;
 
@@ -55,20 +57,24 @@ public class Toast : MonoBehaviour
 
     private GameObject CreateTextObject(string toastMessage)
     {
+        bool isOculus = UnityEngine.XR.XRSettings.isDeviceActive;
+
         RectTransform objectRectTransform = Canvas.gameObject.GetComponent<RectTransform>();
-        float top = -((objectRectTransform.rect.height / 2) - BOTTOM_MARGIN);
+        float top = -((objectRectTransform.rect.height / 2) - (isOculus ? BOTTOM_MARGIN_OCULUS : BOTTOM_MARGIN));
 
-        GameObject go = new GameObject("GameObject");
-        go.name = "go";
-        go.transform.parent = Canvas.transform;
+        GameObject toast = new GameObject("GameObject");
+        toast.name = "toastMessage";
+        toast.transform.parent = Canvas.transform;
 
-        Text text = go.AddComponent<Text>();
+        Text text = toast.AddComponent<Text>();
         text.fontSize = FONT_SIZE;
         text.text = toastMessage;
         text.alignment = TextAnchor.MiddleCenter;
         text.rectTransform.pivot.Scale(new Vector2(1, 1));
         text.rectTransform.pivot.Set(0.5f, 0.5f);
-        text.rectTransform.localPosition =  new Vector3(0, top, 0);
+        text.rectTransform.localRotation = new Quaternion(0, 0, 0, 0);
+        text.rectTransform.localPosition =  new Vector3(0, top, -100);
+        text.rectTransform.localScale = new Vector3(1, 1, 1);
         text.rectTransform.sizeDelta = new Vector2(100000, LINE_HEIGHT);
 
 
@@ -76,7 +82,7 @@ public class Toast : MonoBehaviour
         text.font = ArialFont;
         text.material = ArialFont.material;  
 
-        return go; 
+        return toast; 
     }
 
 
